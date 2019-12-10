@@ -1,10 +1,14 @@
 Spaceship bob=new Spaceship();
 Star[]sky=new Star[200];
+ArrayList <Asteroid> fred=new ArrayList <Asteroid>();
 public void setup() 
 {
   size(500,500);
   for(int i=0;i<sky.length;i++){
   	sky[i]=new Star();
+  }
+  for(int i=0;i<10;i++){
+  	fred.add(new Asteroid());
   }
 }
 public void draw() 
@@ -16,11 +20,19 @@ public void draw()
   }
   bob.show();
   bob.move();
+  for(int i=0;i<fred.size();i++){
+  	fred.get(i).show();
+  	fred.get(i).move();
+  	float crash=dist((float)bob.getX(),(float)bob.getY(),(float)fred.get(i).getX(),(float)fred.get(i).getY());
+  	if(crash<10){
+  		fred.remove(i);
+  	}
+  }
 }
 public void keyPressed()
 {
 	if(keyCode==UP){
-		bob.accelerate(.3);
+		bob.accelerate(.2);
 	}
 	if(key=='h'){
 		bob.setCenterX((int)(Math.random()*500));
@@ -30,10 +42,10 @@ public void keyPressed()
 		bob.setDirectionY(0);
 	}
 	if(keyCode==LEFT){
-		bob.turn(-5);
+		bob.turn(-6);
 	}
 	if(keyCode==RIGHT){
-		bob.turn(5);
+		bob.turn(6);
 	}
 }
 
