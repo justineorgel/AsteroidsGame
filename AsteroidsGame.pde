@@ -1,6 +1,7 @@
 Spaceship bob=new Spaceship();
 Star[]sky=new Star[200];
 ArrayList <Asteroid> fred=new ArrayList <Asteroid>();
+ArrayList <Bullet> george=new ArrayList <Bullet>();
 public void setup() 
 {
   size(500,500);
@@ -28,7 +29,22 @@ public void draw()
   		fred.remove(i);
   	}
   }
+  for(int i=0;i<george.size();i++){
+  	george.get(i).show();
+  	george.get(i).move();
+  }
+  for(int i=0;i<george.size();i++){
+  	for(int j=0;j<fred.size();j++){
+  		float shot=dist((float)george.get(i).getX(),(float)george.get(i).getY(),(float)fred.get(j).getX(),(float)fred.get(j).getY());
+  		if(shot<10){
+  			fred.remove(j);
+  			george.remove(i);
+ 			break;
+  		}
+  	}
+  }
 }
+
 public void keyPressed()
 {
 	if(keyCode==UP){
@@ -46,6 +62,9 @@ public void keyPressed()
 	}
 	if(keyCode==RIGHT){
 		bob.turn(6);
+	}
+	if(key==' '){
+		george.add(new Bullet(bob));
 	}
 }
 
